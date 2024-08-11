@@ -1,11 +1,11 @@
-import './App.css'
+import Filter from './features/filter/Filter'
+import './main.scss'
 
 function App() {
   return (
-    <>
-      <div>1</div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+    <div className="app">
+      <Filter />
+    </div>
   )
 }
 
