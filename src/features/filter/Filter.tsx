@@ -1,6 +1,9 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import Checkbox from '../../components/checkbox/Checkbox'
 
 import { selectFilters, checkedFilter } from './filterSlice'
+
+import './filter.scss'
 
 function Filter() {
   const filters = useAppSelector(selectFilters)
@@ -10,14 +13,7 @@ function Filter() {
     <ul className="options">
       {filters.map((i) => (
         <li key={i.name}>
-          <input
-            type="checkbox"
-            checked={i.state}
-            name={i.name}
-            id={i.name}
-            onChange={() => dispatch(checkedFilter(i.name))}
-          />
-          <label htmlFor={i.name}>{i.name}</label>
+          <Checkbox item={i} onChange={() => dispatch(checkedFilter(i.name))} />
         </li>
       ))}
     </ul>

@@ -1,0 +1,22 @@
+.text {
+  color: var(--text-base);
+
+  &_faded {
+    color: var(--text-faded);
+  }
+
+  &_size {
+    &--1 {
+      font-size: var(--f-size-normal);
+    }
+    &--2 {
+      font-size: var(--f-size-mid);
+    }
+    &--3 {
+      font-size: var(--f-size-midplus);
+    }
+    &--4 {
+      font-size: var(--f-size-big);
+    }
+  }
+}

@@ -1,0 +1,27 @@
+:root {
+  --text-base: #4a4a4a;
+  --text-faded: #a0b0b9;
+  --accent: #2196f3;
+  --border: #dfe5ec;
+  --hover: #f1fcff;
+  --background: #f3f7fa;
+  --content-base: #fff;
+  --shadow: 0px 2px 8px 0px #0000001a;
+}
+
+[data-theme='dark'] {
+  --text-base: #d1d1d1;
+  --text-faded: #a0b0b9;
+  --accent: #2196f3;
+  --hover: #252525;
+  --background: #303030;
+  --content-base: #1e1e1e;
+  --shadow: 0px 2px 8px 0px #55555570;
+}
+
+body * {
+  transition:
+    color 0.3s ease-in-out,
+    background-color 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
+}

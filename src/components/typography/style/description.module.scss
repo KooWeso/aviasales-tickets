@@ -1,0 +1,9 @@
+.description {
+  display: flex;
+  gap: 1rem;
+
+  &_tab {
+    display: flex;
+    flex-direction: column;
+  }
+}

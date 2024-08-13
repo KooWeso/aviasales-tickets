@@ -55,6 +55,12 @@ module.exports = {
         'newlines-between': 'always',
       },
     ],
+    'react/require-default-props': [
+      'error',
+      {
+        functions: 'defaultArguments',
+      },
+    ],
   },
   settings: {
     'import/resolver': {

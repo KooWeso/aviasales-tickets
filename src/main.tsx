@@ -3,12 +3,11 @@ import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 
 import { store } from './app/store'
-import App from './App'
-import './index.css'
+import App from './app/App'
 
-// Create Provider from Redux-toolkit =>
-// import { Provider } from 'react-redux'
-// import store from './store'
+import './style/colors.css'
+import './style/variables.css'
+import './style/index.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
