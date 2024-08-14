@@ -11,7 +11,7 @@ type CheckboxProps = {
 function Checkbox({ item, onChange }: CheckboxProps) {
   return (
     <label htmlFor={item.name} className={style.checkbox}>
-      <input type="checkbox" checked={item.state} name={item.name} id={item.name} onChange={onChange} />
+      <input type="checkbox" checked={item.state} name="filter" id={item.name} value={item.name} onChange={onChange} />
       <span className={style.checkbox_dummy} />
       {item.name}
     </label>

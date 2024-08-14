@@ -9,6 +9,9 @@
   /* gaps */
   --gap: 0.5rem;
   --gap-el: 1.25rem;
+  /* padding */
+  --p: 10px;
+  --p-el: 1.25rem;
   /* size */
   --h-size-title: 3.125rem; /* title size */
   /* border */

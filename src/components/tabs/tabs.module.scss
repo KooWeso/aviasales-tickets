@@ -17,9 +17,11 @@
   &_button {
     flex: 1;
     display: flex;
+    cursor: pointer;
     align-items: center;
     justify-content: center;
     height: var(--h-size-title);
+    background-color: var(--content-base);
 
     border: 1px solid var(--border);
 

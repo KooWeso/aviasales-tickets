@@ -1,40 +1,64 @@
 import { useEffect } from 'react'
 
-import Price from '../components/typography/Price'
-import Description from '../components/typography/Description'
-import Text from '../components/typography/Text'
 import Filter from '../features/filter/Filter'
 import Tabs from '../components/tabs/Tabs'
+import test from '../assets/test.png'
+import Card from '../features/card/Card'
+
+import style from './app.module.scss'
 
 function App() {
+  // auto change theme
   useEffect(() => {
     const theme: string = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
     document.querySelector('html')!.setAttribute('data-theme', theme)
   }, [])
 
+  // data for tabs
   const tabs = [
-    { name: 'ada ada', data: <Text>adada</Text> },
-    { name: '2second', data: <Text>22222</Text> },
-    { name: '6s ada aa', data: <Text>2211222</Text> },
+    {
+      name: 'ada ada',
+      data: (
+        <>
+          <Card price={111232000} img={test} data="MSaC" />
+          <Card price={112300} img={test} data="SdML" />
+          <Card price={69132690} img={test} data="NaZD" />
+          <Card price={69132690} img={test} data="NaZD" />
+          <Card price={69132690} img={test} data="NaZD" />
+        </>
+      ),
+    },
+    {
+      name: '2second',
+      data: (
+        <>
+          <Card price={1122000} img={test} data="MSddC" />
+          <Card price={112300} img={test} data="SddML" />
+          <Card price={69123690} img={test} data="NZdD" />
+          <Card price={69123690} img={test} data="NZdD" />
+          <Card price={69123690} img={test} data="NZdD" />
+        </>
+      ),
+    },
+    {
+      name: '6s ada aa',
+      data: (
+        <>
+          <Card price={112000} img={test} data="MSC" />
+          <Card price={100} img={test} data="SML" />
+          <Card price={69690} img={test} data="NZD" />
+          <Card price={69690} img={test} data="NZD" />
+          <Card price={69690} img={test} data="NZD" />
+        </>
+      ),
+    },
   ]
 
   return (
-    <div className="app">
-      <section style={{ border: '1px solid black' }}>
-        TYPOGRAPHY:
-        <Description data="MSC" />
-        <Price price={10000} />
-        <Text faded>size 1</Text>
-        <Text size={2}>size 2</Text>
-        <Text size={3}>size 3</Text>
-        <Text size={4}>size 4</Text>
-      </section>
-      <section style={{ border: '1px solid grey' }}>
-        OPTIONS:
-        <Filter />
-      </section>
-      <section style={{ border: '1px solid #aaa' }}>
-        TABS: <Tabs tabs={tabs} />
+    <div className={style.app}>
+      <Filter />
+      <section className={style.app_content}>
+        <Tabs tabs={tabs} />
       </section>
     </div>
   )

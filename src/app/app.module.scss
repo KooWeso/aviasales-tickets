@@ -1,0 +1,16 @@
+.app {
+  padding-top: 10rem;
+  width: 768px;
+  display: flex;
+  gap: var(--gap-el);
+
+  @media (max-width: 768px) {
+    padding-inline: var(--p-el);
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &_content {
+    flex: 1;
+  }
+}

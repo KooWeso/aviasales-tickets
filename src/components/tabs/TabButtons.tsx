@@ -28,6 +28,7 @@ function TabButtons({ tabs, setCurrentTab, currentTab }: TabButtonsProps) {
           key={i.name}
           onKeyDownCapture={(event) => {
             if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault()
               setCurrentTab(index)
             }
           }}
@@ -35,7 +36,7 @@ function TabButtons({ tabs, setCurrentTab, currentTab }: TabButtonsProps) {
             setCurrentTab(index)
           }}
         >
-          <Text size={3}>{i.name}</Text>
+          <Text size={2}>{i.name}</Text>
         </li>
       ))}
     </div>

@@ -1,5 +1,5 @@
 .checkbox {
-  padding: var(--gap);
+  padding: var(--p) var(--gap-el);
   position: relative;
   display: flex;
   align-items: center;
@@ -32,11 +32,12 @@
     height: 1rem;
 
     background-color: var(--content-base);
-    border: 1px solid var(--accent);
+    border: 1px solid var(--border-inactive);
     border-radius: 2px;
   }
 
   input[type='checkbox']:checked + &_dummy {
+    border-color: var(--accent);
     &::before {
       content: '\2714';
       color: var(--accent);

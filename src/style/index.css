@@ -30,7 +30,12 @@ li {
 body {
   display: flex;
   justify-content: center;
-  min-width: 320px;
   min-height: 100vh;
-  background-color: var(--background) !important;
+  background-color: var(--background);
+}
+
+@media (max-width: 768px) {
+  body > div {
+    flex: 1;
+  }
 }

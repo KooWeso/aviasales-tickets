@@ -1,0 +1,27 @@
+.filter {
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  &_wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--content-base);
+    border-radius: var(--rad);
+    box-shadow: var(--shadow);
+    height: fit-content;
+    flex-shrink: 0;
+    padding-bottom: var(--p);
+  }
+
+  &_title {
+    padding: var(--p) var(--p-el);
+    display: flex;
+    align-items: center;
+    height: var(--h-size-title);
+  }
+}
