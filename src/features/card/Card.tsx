@@ -1,14 +1,16 @@
 import Image from '../../components/image/Image'
+import type { DescriptionData } from '../../components/typography/Description'
 import Typography from '../../components/typography/index'
+import type { Ticket } from '../tickets/types'
 
 import style from './card.module.scss'
 
 const { Price, Description } = Typography
 
-type CardProps = {
-  price: number
-  img: string
-  data: string
+export type CardProps = {
+  price: Ticket['price']
+  img: Ticket['carrier']
+  data: DescriptionData[]
 }
 
 function Card({ price, img, data }: CardProps) {
@@ -18,8 +20,9 @@ function Card({ price, img, data }: CardProps) {
         <Price price={price} /> <Image src={img} />
       </div>
       <div className={style.card__content}>
-        <Description data={data} />
-        <Description data={data} />
+        {data.map((i) => (
+          <Description key={`${i.origin}-${i.destination}`} data={i} />
+        ))}
       </div>
     </div>
   )

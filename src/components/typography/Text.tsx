@@ -1,4 +1,4 @@
-import { JSXElementConstructor, ReactElement } from 'react'
+import type { JSXElementConstructor, ReactElement } from 'react'
 
 import style from './style/text.module.scss'
 

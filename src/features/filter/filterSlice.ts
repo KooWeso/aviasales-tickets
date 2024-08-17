@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
 // REDUCKS pattern ;)
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 type Filter = {
   name: string

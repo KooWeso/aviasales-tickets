@@ -1,4 +1,6 @@
-@import url('./font.css');
+@import url(./style/font.css);
+@import url(./style/variables.css);
+@import url(./style/colors.css);
 
 :root {
   font-family: 'Open Sans', system-ui, sans-serif;

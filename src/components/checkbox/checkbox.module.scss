@@ -14,12 +14,14 @@
   color: var(--text-base);
   font-size: var(--f-size-mid);
 
+  transition: none;
+
   &:hover {
     background-color: var(--hover);
   }
 
   & input[type='checkbox'] {
-    margin-right: -1.45rem;
+    margin-right: -1.55rem;
   }
 
   &_dummy {
@@ -28,8 +30,8 @@
     align-items: center;
     justify-content: center;
     z-index: 100;
-    width: 1rem;
-    height: 1rem;
+    width: 1.25rem;
+    height: 1.25rem;
 
     background-color: var(--content-base);
     border: 1px solid var(--border-inactive);
@@ -39,8 +41,14 @@
   input[type='checkbox']:checked + &_dummy {
     border-color: var(--accent);
     &::before {
-      content: '\2714';
+      // content: '\2714';
+      content: '';
       color: var(--accent);
+      border: solid #2196f3;
+      border-width: 0 1.8px 1.8px 0;
+      height: 11px;
+      transform: rotate(45deg) translate(-0.095rem, -0.095rem);
+      width: 6px;
     }
   }
 }

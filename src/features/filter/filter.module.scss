@@ -8,6 +8,7 @@
   }
 
   &_wrapper {
+    min-width: 14.5rem;
     display: flex;
     flex-direction: column;
     background-color: var(--content-base);
@@ -15,7 +16,6 @@
     box-shadow: var(--shadow);
     height: fit-content;
     flex-shrink: 0;
-    padding-bottom: var(--p);
   }
 
   &_title {
