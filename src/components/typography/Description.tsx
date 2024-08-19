@@ -2,12 +2,12 @@ import Text from './Text'
 import style from './style/description.module.scss'
 
 type TimeFormat = `${string} - ${string}`
-type DurationFormat = string
 export interface DescriptionData {
   origin: string
   destination: string
   timeFromAToB: TimeFormat
-  duration: DurationFormat
+  duration: string
+  durationMin: number
   stops: string[]
 }
 

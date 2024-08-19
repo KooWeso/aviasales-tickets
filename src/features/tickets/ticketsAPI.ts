@@ -1,45 +1,41 @@
 import type { SearchIdType, TicketsType } from './types'
 
 export const fetchSearchId = async () => {
-  const response = await fetch('https://aviasales-test-api.kata.academy/search')
-  const { searchId } = (await response.json()) as SearchIdType
-  if (!response.ok) {
-    const statusError = new Error(response.statusText)
-    statusError.name = String(response.status)
-    throw statusError
+  try {
+    const response = await fetch('https://aviasales-test-api.kata.academy/search')
+    if (!response.ok) {
+      const statusError = new Error(response.statusText)
+      statusError.name = String(response.status)
+      throw statusError
+    }
+    const { searchId } = (await response.json()) as SearchIdType
+    return searchId
+  } catch (error) {
+    if (error instanceof Error) {
+      if (Number.isNaN(Number(error.name))) {
+        throw new Error(`fetchSearchId error: ${error.message}`)
+      }
+    }
+    throw error
   }
-  return searchId
 }
 
 export const fetchTickets = async (searchId: string) => {
-  const response = await fetch(`https://aviasales-test-api.kata.academy/tickets?searchId=${searchId}`)
-  const data = (await response.json()) as TicketsType
-  if (!response.ok) {
-    const statusError = new Error(response.statusText)
-    statusError.name = String(response.status)
-    throw statusError
-  }
-  return data
-}
-
-// TODO REFACTOR !
-export const subToTickets = async (searchId: string): Promise<TicketsType> => {
   try {
-    const ticketsData = await fetchTickets(searchId)
-    return ticketsData
-  } catch (e) {
-    if (e instanceof Error) {
-      // for timeot error
-      if (e.name === '502') {
-        await subToTickets(searchId)
-      }
-      // for any other errors
-      await new Promise((resolve) => {
-        setTimeout(resolve, 200)
-      })
-      await subToTickets(searchId)
+    const response = await fetch(`https://aviasales-test-api.kata.academy/tickets?searchId=${searchId}`)
+    if (!response.ok) {
+      const statusError = new Error(response.statusText)
+      statusError.name = String(response.status)
+      throw statusError
     }
-    // Unexpected not an error
-    throw e
+    const data = (await response.json()) as TicketsType
+    return data
+  } catch (error) {
+    if (error instanceof Error) {
+      if (Number.isNaN(Number(error.name))) {
+        throw new Error(`fetchTickets error: ${error.message}`)
+      }
+    }
+    throw error
   }
 }

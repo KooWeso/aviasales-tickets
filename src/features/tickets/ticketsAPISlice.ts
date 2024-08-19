@@ -1,15 +1,17 @@
+/* eslint-disable indent */
 /* eslint-disable no-param-reassign */
 import type { SerializedError } from '@reduxjs/toolkit'
 
 import createAppSlice from '../../app/createAppSlice'
 import type { AppThunk } from '../../app/store'
 
-import { fetchSearchId, fetchTickets, subToTickets } from './ticketsAPI'
-import type { Ticket } from './types'
+import { fetchSearchId, fetchTickets } from './ticketsAPI'
+import type { RefactoredTicketType } from './types'
+import refactorSegment from './utils'
 
 export interface TicketsStateType {
-  ticketsData: Ticket[]
-  moreData: boolean
+  ticketsData: RefactoredTicketType[]
+  stop: boolean
   status: 'idle' | 'loading' | 'failed'
   error: SerializedError | undefined
   searchId: string
@@ -17,7 +19,7 @@ export interface TicketsStateType {
 
 const initialState: TicketsStateType = {
   ticketsData: [],
-  moreData: false,
+  stop: false,
   status: 'idle',
   error: undefined,
   searchId: '',
@@ -32,8 +34,22 @@ export const ticketsAPISlice = createAppSlice({
         state.status = 'loading'
       },
       fulfilled: (state, { payload }) => {
-        state.ticketsData.push(...payload.tickets)
-        state.moreData = payload.stop
+        // thunks logic can have dependencies btw ;)
+        // refactor logic
+        // cons easy to operate
+        state.ticketsData.push(
+          ...payload.tickets.map((i, ind) => {
+            const refactoredTicket = {
+              id: `Ticket-${ind}-${i.segments[0].date}`,
+              carrier: i.carrier,
+              price: i.price,
+              img: `https://pics.avs.io/99/36/${i.carrier}.png`,
+              data: i.segments ? i.segments.map((j) => refactorSegment(j)) : [],
+            }
+            return refactoredTicket
+          })
+        )
+        state.stop = payload.stop
         state.error = undefined
         state.status = 'idle'
       },
@@ -47,21 +63,9 @@ export const ticketsAPISlice = createAppSlice({
         state.status = 'loading'
       },
       fulfilled: (state, { payload }) => {
-        state.searchId = payload
-        state.error = undefined
-        state.status = 'idle'
-      },
-      rejected: (state, action) => {
-        state.error = action.error
-        state.status = 'failed'
-      },
-    }),
-    subedToTickets: create.asyncThunk(subToTickets, {
-      pending: (state) => {
-        state.status = 'loading'
-      },
-      fulfilled: (state, { payload }) => {
-        state.ticketsData.push(...payload.tickets)
+        if (!state.searchId) {
+          state.searchId = payload
+        }
         state.error = undefined
         state.status = 'idle'
       },
@@ -76,53 +80,43 @@ export const ticketsAPISlice = createAppSlice({
     selectStatus: (tickets) => tickets.status,
     selectError: (tickets) => tickets.error,
     selectSearchId: (tickets) => tickets.searchId,
+    selectStop: (tickets) => tickets.stop,
   },
 })
 
 export const { getTickets, getSearchId } = ticketsAPISlice.actions
 
-export const { selectTicketsData, selectStatus, selectError, selectSearchId } = ticketsAPISlice.selectors
+export const { selectTicketsData, selectStatus, selectError, selectSearchId, selectStop } = ticketsAPISlice.selectors
 
-// XXX
-// TODO  refactor !
-export const initializeTickets = (): AppThunk => async (dispatch, getState) => {
-  // if id exists, do not fetch
-  const searchId = selectSearchId(getState())
-  const statusSearchIdle = selectStatus(getState())
-  if (!searchId && statusSearchIdle === 'idle') await dispatch(getSearchId())
-  // ==============================================
-  // if fetching failed, fetch again
-  const updatedSearchId = selectSearchId(getState())
-  const statusSearchFailed = selectStatus(getState())
-  if (!updatedSearchId || statusSearchFailed === 'failed') {
-    await new Promise((resolve) => {
-      setTimeout(resolve, 200)
-    })
-    initializeTickets()
+export const subedToTickets =
+  (t?: number): AppThunk =>
+  async (dispatch, getState) => {
+    // end of recursion / polling
+    if (selectStop(getState())) return 'no more data'
+    // useless unless in dev mode
+    if (selectStatus(getState()) === 'loading') return 'already loading'
+    // guard if something went wrong
+    const id = selectSearchId(getState())
+    if (!id) throw new Error('searchId is not defined, it should exist in this moment')
+    // actuall logic
+    await dispatch(getTickets(id))
+    // error logic
+    if (selectStatus(getState()) === 'failed' && selectError(getState())) {
+      // t means how many **tries** Error occurred
+      if (t && t >= 5)
+        throw new Error(
+          `Server is not responding: ${selectError(getState())!.name} : ${selectError(getState())!.message}`
+        )
+      await new Promise((resolve) => {
+        setTimeout(resolve, 150)
+      })
+      dispatch(subedToTickets(t ? t + 1 : 1))
+    }
+    // stop === true, data is over
+    if (!selectStop(getState())) {
+      // t reset, can be used without 0, it'll be the same
+      dispatch(subedToTickets(0))
+    }
+    // (-_-)
+    return 'ok'
   }
-  // ==============================================
-  // if fetching succeeded, get tickets
-  // right now, it's not possible to fetch tickets without searchId
-  // ticketsData array should be empty here !
-  console.log('%c searchId: ', 'color: yellow', selectSearchId(getState()), 'before initT => SHOUD NOT BE EMPTY <=')
-  console.log('%c status: ', 'color: pink', selectStatus(getState()), 'before initT => SHOUD BE IDLE <=')
-  if (selectTicketsData(getState()).length)
-    console.error('ticketsData should be empty here ! GOT: ', selectTicketsData(getState()))
-  if (updatedSearchId) await dispatch(getTickets(updatedSearchId))
-  console.log('%c ticketsData: ', 'color: green', selectTicketsData(getState()), 'after initT')
-  console.log('%c status: ', 'color: blue', selectStatus(getState()), 'after initT => SHOUD BE failed or idle <=')
-
-  // ==============================================
-  // if fetching failed, fetch again
-  const ticketsData = selectTicketsData(getState())
-  const statusTicketsFailed = selectStatus(getState())
-  if (!ticketsData.length && statusTicketsFailed === 'failed') {
-    await new Promise((resolve) => {
-      setTimeout(resolve, 200)
-    })
-    initializeTickets()
-  }
-  // ==============================================
-  // if fetching succeeded, return tickets
-  return ticketsData
-}

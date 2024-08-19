@@ -21,7 +21,9 @@
   }
 
   & input[type='checkbox'] {
-    margin-right: -1.55rem;
+    margin-right: -1.72rem;
+    width: 1.2rem;
+    height: 1.2rem;
   }
 
   &_dummy {
@@ -43,8 +45,8 @@
     &::before {
       // content: '\2714';
       content: '';
-      color: var(--accent);
-      border: solid #2196f3;
+      // color: var(--accent);
+      border: solid var(--accent);
       border-width: 0 1.8px 1.8px 0;
       height: 11px;
       transform: rotate(45deg) translate(-0.095rem, -0.095rem);

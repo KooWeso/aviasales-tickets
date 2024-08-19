@@ -2,19 +2,27 @@ import { useEffect } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 
-import { initializeTickets, selectTicketsData } from './ticketsAPISlice'
+import { subedToTickets, getSearchId, selectSearchId } from './ticketsAPISlice'
 
 // logic to fetch tickets
 const useTickets = () => {
   const dispatch = useAppDispatch()
-  const ticketsData = useAppSelector(selectTicketsData)
+  const searchId = useAppSelector(selectSearchId)
 
   // will be called only on first render
   useEffect(() => {
-    if (ticketsData.length > 0) return
-    console.log('useTickets is called ! 2 times in development !')
-    dispatch(initializeTickets())
-  }, [dispatch, ticketsData.length])
+    if (searchId) return
+    dispatch(getSearchId()).catch((error) => {
+      throw new Error(`getSearchId error: ${error}`)
+    })
+  }, [dispatch, searchId])
+  // will be called only if searchId is defined
+  // and expectedly from here it will be called only once
+  // but its own logic uses Recursirsion
+  useEffect(() => {
+    if (!searchId) return
+    dispatch(subedToTickets())
+  }, [dispatch, searchId])
 }
 
 export default useTickets

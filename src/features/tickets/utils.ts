@@ -19,6 +19,7 @@ const refactorSegment = (i: Ticket['segments'][0]): DescriptionData => {
     destination: i.destination,
     timeFromAToB: `${timeA} - ${timeB}`,
     duration: `${days ? `${days}d` : ''} ${hours % 24}h ${i.duration % 60}m`,
+    durationMin: i.duration,
     stops: i.stops,
   }
 }

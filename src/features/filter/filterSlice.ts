@@ -5,6 +5,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
 type Filter = {
+  value?: number
   name: string
   state: boolean
 }
@@ -16,10 +17,10 @@ export interface FilterState {
 const initialState: FilterState = {
   filterData: [
     { name: 'All', state: true },
-    { name: 'No transfers', state: true },
-    { name: '1 transfer', state: true },
-    { name: '2 transfers', state: true },
-    { name: '3 transfers', state: true },
+    { name: 'No transfers', state: true, value: 0 },
+    { name: '1 transfer', state: true, value: 1 },
+    { name: '2 transfers', state: true, value: 2 },
+    { name: '3 transfers', state: true, value: 3 },
   ],
 }
 

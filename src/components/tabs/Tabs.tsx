@@ -14,7 +14,6 @@ export type TabsProps = {
 
 function Tabs({ tabs }: TabsProps) {
   const [currentTab, setCurrentTab] = useState(0)
-  console.log('%cTabs render', 'color: darkblue')
 
   const content = (
     <div className={style.tabs}>

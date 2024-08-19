@@ -17,7 +17,7 @@ type TabButtonsProps = {
   currentTab: number
   setCurrentTab: (i: number) => void
 }
-
+// FIXME: add buttons to TabButtons XD
 function TabButtons({ tabs, setCurrentTab, currentTab }: TabButtonsProps) {
   return (
     <div className={style.tabs_header}>
