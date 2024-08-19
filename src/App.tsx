@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/no-unresolved
+import { SpeedInsights } from '@vercel/speed-insights/react'
+
 import Tickets from './features/tickets/Tickets'
 import Filter from './features/filter/Filter'
 import Tabs from './components/tabs/Tabs'
@@ -94,6 +97,7 @@ function App() {
           <Tabs tabs={tabs} />
         </section>
       </div>
+      <SpeedInsights />
     </>
   )
 }
