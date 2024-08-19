@@ -84,7 +84,7 @@ function App() {
           onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
           className={`${style.app_img} ${theme === 'light' ? '' : style.app_dark}`}
         >
-          <img className={style['app_img-glob']} src="src\assets\form.png" alt="glob" />
+          <img className={style['app_img-glob']} src="/form.png" alt="glob" />
           <img className={style['app_img-plane']} src="/plane.png" alt="glob" />
         </button>
       </div>
