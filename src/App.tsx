@@ -85,7 +85,7 @@ function App() {
           className={`${style.app_img} ${theme === 'light' ? '' : style.app_dark}`}
         >
           <img className={style['app_img-glob']} src="/form.png" alt="glob" />
-          <img className={style['app_img-plane']} src="/plane.png" alt="glob" />
+          <img className={style['app_img-plane']} src="/plane.png" alt="plane" />
         </button>
       </div>
       <div className={style.app}>
