@@ -81,7 +81,7 @@ function App() {
 
   return (
     <>
-      <div className={style.app_header}>
+      <header className={style.app_header}>
         <button
           type="button"
           onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
@@ -90,13 +90,13 @@ function App() {
           <img className={style['app_img-glob']} src="/form.png" alt="glob" />
           <img className={style['app_img-plane']} src="/plane.png" alt="plane" />
         </button>
-      </div>
-      <div className={style.app}>
+      </header>
+      <main className={style.app}>
         <Filter />
         <section className={style.app_content}>
           <Tabs tabs={tabs} />
         </section>
-      </div>
+      </main>
       <Analytics />
     </>
   )
